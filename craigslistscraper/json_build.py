@@ -67,16 +67,26 @@ class JsonProcessor:
         except FileExistsError:
             pass
 
-        with concurrent.futures.ProcessPoolExecutor() as executor: # Multiprocessor 
-            city_dictionaries = executor.map(self.json_data, self.domains, self.cities)
+        # with concurrent.futures.ProcessPoolExecutor() as executor: # Multiprocessor 
+        #     city_dictionaries = executor.map(self.json_data, self.domains, self.cities)
 
-            for city_dictionary in city_dictionaries:
-                print(city_dictionary) # Used for debugging
+        #     for city_dictionary in city_dictionaries:
+        #         print(city_dictionary) # Used for debugging
 
-                self.search_dictionaries[self.search].update(city_dictionary)
+        #         self.search_dictionaries[self.search].update(city_dictionary)
 
-                with open('data/{}/{}_{}.json'.format(current_date, self.search, current_time), 'w') as f:
-                    json.dump(self.search_dictionaries, f, indent=2)
+        #         with open('data/{}/{}_{}.json'.format(current_date, self.search, current_time), 'w') as f:
+        #             json.dump(self.search_dictionaries, f, indent=2)
+
+        for domain, city in zip(self.domains, self.cities):
+            city_dictionary = self.json_data(domain, city)
+            print(city_dictionary)  # Used for debugging
+
+            self.search_dictionaries[self.search].update(city_dictionary)
+
+            with open('data/{}/{}_{}.json'.format(current_date, self.search, current_time), 'w') as f:
+                json.dump(self.search_dictionaries, f, indent=2)
+
 
 
     def json_data(self, domain, city):

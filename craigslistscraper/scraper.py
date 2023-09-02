@@ -21,7 +21,7 @@ class CraigslistSearches:
         Retuns the Posting Title of the ad in the form of a string.
         """
 
-        posting_title_raw = self.soup.find_all(class_='result-title hdrlnk')
+        posting_title_raw = self.soup.find_all(class_='title')
 
         posting_title = [item.get_text() for item in posting_title_raw]
 
@@ -32,9 +32,9 @@ class CraigslistSearches:
         Returns Price of ad in form $'price' with the dollar sign included.
         """
 
-        prices_raw = self.soup.find_all(class_='result-meta')
+        prices_raw = self.soup.find_all(class_='price')
 
-        price = [item.find(class_='result-price').get_text() for item in prices_raw]
+        price = [price_div.contents[0] for price_div in prices_raw]
 
         return price
 
@@ -43,9 +43,9 @@ class CraigslistSearches:
         Returns a sting of the link to an ad.
         """
 
-        raw = self.soup.find_all(class_='result-row')
+        results = self.soup.findAll('li', class_='cl-static-search-result')
 
-        ad_link_raw = [item.find('a') for item in raw]
+        ad_link_raw = [item.find('a') for item in results]
 
         ad_link = [items.get('href') for items in ad_link_raw]
 
