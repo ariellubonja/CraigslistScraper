@@ -1,5 +1,7 @@
 # CraigslistScraper
 
+## Updated RyanIrl's repo to work as of Sept-2023
+
 **Note:** CraigslistScraper is for personal use and data science only.
 
 CraigslistScraper is a web scraper for craigslist. Users define what they would
